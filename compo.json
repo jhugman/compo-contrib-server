@@ -1,0 +1,34 @@
+{
+  "extensions": [
+    {
+      "epID": "console.command",
+      "firstWord": "list",
+      "secondWord": "routes",
+      "function": "./lib/console!listRoutes",
+      "description": "List the routes that the server is serving"
+    },
+    {
+      "epID": "http.endpoint",
+      "path": "/",
+      "function": "./lib/endpoints!getRoot",
+      "description": "The home page"
+    },
+    {
+      "epID": "http.endpoint",
+      "path": "/u/:user",
+      "method": "get",
+      "function": "./lib/endpoints!getUser",
+      "description": "User profile page"
+    }
+  ],
+
+  "extensionPoints": {
+    "http.endpoint": {
+      "key": "path"
+    }
+  },
+
+  "permissions": [],
+
+  "singletons": {}
+}

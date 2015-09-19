@@ -1,0 +1,31 @@
+{
+  "name": "compo-contrib-server",
+  "version": "0.0.1",
+  "description": "A plugin providing a base for `compo` servers.",
+  "main": "index.js",
+  "compo": "compo.json",
+  "scripts": {
+    "test": "tap --strict test/test-*.js",
+    "start": "node --use-strict node_modules/compo/bin/cli.js ../compo-contrib-console"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhugman/compo-contrib-server.git"
+  },
+  "keywords": [
+    "compo",
+    "compo-plugin",
+    "server",
+    "plugin"
+  ],
+  "author": "@jhugman",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jhugman/compo-contrib-server/issues"
+  },
+  "homepage": "https://github.com/jhugman/compo-contrib-server#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "underscore": "^1.8.3"
+  }
+}

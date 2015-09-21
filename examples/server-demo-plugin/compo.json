@@ -1,0 +1,17 @@
+{
+  "extensions": [
+    {
+      "epID": "http.endpoint",
+      "path": "/u/:user",
+      "method": "get",
+      "function": "./lib/endpoints!getUser",
+      "description": "User profile page"
+    },
+    {
+      "epID": "http.endpoint",
+      "path": "/r/:name",
+      "directory": "__dirname/resources",
+      "description": "Resource default directory"
+    }
+  ]
+}

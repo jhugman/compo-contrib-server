@@ -6,19 +6,6 @@
       "secondWord": "routes",
       "function": "./lib/console!listRoutes",
       "description": "List the routes that the server is serving"
-    },
-    {
-      "epID": "http.endpoint",
-      "path": "/u/:user",
-      "method": "get",
-      "function": "./lib/endpoints!getUser",
-      "description": "User profile page"
-    },
-    {
-      "epID": "http.endpoint",
-      "path": "/r/:name",
-      "directory": "__dirname/lib",
-      "description": "Resource default directory"
     }
   ],
 

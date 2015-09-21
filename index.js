@@ -1,10 +1,14 @@
 let express = require('express'),
     app = express()
+
+let path = require('path'), 
+    fs = require('fs')
+
 let server
 
 function startServer () {
   let plugin = exports.plugin 
-  handleDynamicEndpoints(plugin)
+  handleEndpoints(plugin)
 
 
   server = app.listen(process.env.PORT || 8080, () => {
@@ -15,7 +19,7 @@ function startServer () {
   })
 }
 
-function handleDynamicEndpoints (plugin) {
+function handleEndpoints (plugin) {
   let ep = plugin.extensionPoints['http.endpoint']
   // By the time this is run (because of timeout)
   // at startup at least, the endpoints will 
@@ -27,6 +31,10 @@ function handleDynamicEndpoints (plugin) {
     return a.path.length > b.path.length
   })
   ep.onAdd((endpoint) => {
+    if (endpoint.directory) {
+      app.use(endpoint.path, express.static(endpoint.directory))
+      return
+    }
     switch (endpoint.method) {
       case 'get':
         app.get(endpoint.path, endpoint)
@@ -44,8 +52,11 @@ function handleDynamicEndpoints (plugin) {
   })
 }
 
-function handleStaticEndpoints (plugin) {
-
+exports.unload = function stopServer () {
+  if (server) {
+    console.log('Server says goodbye')
+    server.close()
+  }
 }
 
 

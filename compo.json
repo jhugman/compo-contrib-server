@@ -9,22 +9,23 @@
     },
     {
       "epID": "http.endpoint",
-      "path": "/",
-      "function": "./lib/endpoints!getRoot",
-      "description": "The home page"
-    },
-    {
-      "epID": "http.endpoint",
       "path": "/u/:user",
       "method": "get",
       "function": "./lib/endpoints!getUser",
       "description": "User profile page"
+    },
+    {
+      "epID": "http.endpoint",
+      "path": "/r/:name",
+      "directory": "__dirname/lib",
+      "description": "Resource default directory"
     }
   ],
 
   "extensionPoints": {
     "http.endpoint": {
-      "key": "path"
+      "key": "path",
+      "description": "Add an end point to either a function, or a directory"
     }
   },
 

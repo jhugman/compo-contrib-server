@@ -5,13 +5,13 @@
       "path": "/u/:user",
       "method": "get",
       "function": "./lib/endpoints!getUser",
-      "description": "User profile page"
+      "description": "Fake user profile page"
     },
     {
       "epID": "http.endpoint",
-      "path": "/r/:name",
+      "path": "/r",
       "directory": "__dirname/resources",
-      "description": "Resource default directory"
+      "description": "Plugin resource directory"
     }
   ]
 }

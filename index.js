@@ -6,6 +6,8 @@ let path = require('path'),
 
 let server
 
+let sockets = {}
+
 function startServer () {
   let plugin = exports.plugin 
   handleEndpoints(plugin)
@@ -15,8 +17,21 @@ function startServer () {
     let host = server.address().address;
     let port = server.address().port;
     host = host || '0.0.0.0'
-    console.log('Compo server app listening at http://%s:%s', host, port);
+    console.log('Compo server app listening at http://%s:%s', 'localhost', port);
   })
+
+  // Maintain a hash of all connected sockets
+  let nextSocketId = 0
+  server.on('connection', function (socket) {
+    // Add a newly connected socket
+    var socketId = nextSocketId++;
+    sockets[socketId] = socket;
+
+    // Remove the socket when it closes
+    socket.on('close', function () {
+      delete sockets[socketId];
+    });
+  });
 }
 
 function handleEndpoints (plugin) {
@@ -48,14 +63,22 @@ function handleEndpoints (plugin) {
   })
 
   ep.onRemove((endpoint) => {
-
+    // we don't know how to unregister an endpoint
   })
 }
 
 exports.unload = function stopServer () {
   if (server) {
-    console.log('Server says goodbye')
-    server.close()
+    return new Promise((resolve, reject) => {
+        server.close(() => {
+          console.log('Server says goodbye')
+          resolve()
+        })
+        // Destroy all remaining open sockets
+        for (let i in sockets) {
+          sockets[i].destroy();
+        }
+    })
   }
 }
 

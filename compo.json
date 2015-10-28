@@ -3,8 +3,7 @@
   "extensions": [
     {
       "epID": "console.command",
-      "firstWord": "list",
-      "secondWord": "routes",
+      "command": "list routes",
       "function": "./lib/console!listRoutes",
       "description": "List the routes that the server is serving"
     }

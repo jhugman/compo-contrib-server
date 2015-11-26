@@ -16,7 +16,7 @@
     }
   },
 
-  "permissions": [],
+  "permissions": ["restartSelf"],
 
   "singletons": {}
 }

@@ -1,5 +1,6 @@
 let express = require('express'),
-    app = express()
+    app = express(),
+    _ = require('underscore')
 
 let path = require('path'), 
     fs = require('fs')
@@ -8,10 +9,15 @@ let server
 
 let sockets = {}
 
+let restartSelf
+
 function startServer () {
   let plugin = exports.plugin 
   handleEndpoints(plugin)
 
+  restartSelf = _.debounce(() => {
+    plugin.restartSelf()
+  }, 200)
 
   server = app.listen(process.env.PORT || 8080, () => {
     let host = server.address().address;
@@ -64,6 +70,7 @@ function handleEndpoints (plugin) {
 
   ep.onRemove((endpoint) => {
     // we don't know how to unregister an endpoint
+    restartSelf()
   })
 }
 
@@ -71,7 +78,6 @@ exports.unload = function stopServer () {
   if (server) {
     return new Promise((resolve, reject) => {
         server.close(() => {
-          console.log('Server says goodbye')
           resolve()
         })
         // Destroy all remaining open sockets
